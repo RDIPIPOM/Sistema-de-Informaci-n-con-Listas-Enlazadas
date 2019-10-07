@@ -16,17 +16,17 @@ document.querySelector('#btnAdd').addEventListener('click', () => {
     if (inventory.add(new Product(code, name, cost, stock, description), position))
         alert('Producto agregado correctamente');
     else
-        alert('Posición no válida, por favor introduzca una nueva');
+        alert('Posición o código no válido, por favor intente de nuevo');
 });
 //Button query
 document.querySelector('#btnQuery').addEventListener('click', () => {
     let tagDiv = document.querySelector('#productFound');
-    let code = Number(document.querySelector('#queryByCode').value);
-    let objReturned = inventory.query(code).toString();
-
     tagDiv.innerHTML = "";
-    if (objReturned != "-1")
-        tagDiv.innerHTML = objReturned;
+    let code = Number(document.querySelector('#queryByCode').value);
+    let objReturned = inventory.query(code);
+
+    if (objReturned != -1)
+        tagDiv.innerHTML = objReturned.toString();
     else
         alert('No se ha podido encontrar el producto, por favor pruebe con otro código');
 });
@@ -39,6 +39,10 @@ document.querySelector('#btnDelete').addEventListener('click', () => {
         alert('Producto no encontrado');
 });
 //Button create report
+document.querySelector('#btnCreateReport').addEventListener('click', () => {
+    tagArticle.innerHTML = inventory.report;
+});
+//Button create reverse report
 document.querySelector('#btnCreateReverseReport').addEventListener('click', () => {
     tagArticle.innerHTML = inventory.report;
 });

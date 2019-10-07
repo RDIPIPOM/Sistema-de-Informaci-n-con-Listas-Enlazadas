@@ -10,42 +10,47 @@ export default class SimpleList {
     }
 
     add(node, position) {
-        if (this._isAValidPosition(position)) {
-            let aux = this._start;
+        if (this.query(node.code) === -1) {
+            if (this._isAValidPosition(position)) {
+                let aux = this._start;
 
-            if (position === 0)
-                position = this._totalNodes() + 1;//Put at the end
+                if (position === 0)
+                    position = this._totalNodes() + 1;//Put at the end
 
-            if (position != 1) {
-                if (aux != null) {
-                    while (position > 2){
+                if (position != 1) {
+                    while (position > 2) {
                         aux = aux.next;
                         position--;
                     }
                     node.next = aux.next;
                     aux.next = node;
-                } else
+                } else {//Go to the beginning
+                    node.next = this._start;
                     this._start = node;
-            } else {//Go to the beginning
-                node.next = this._start;
-                this._start = node;
-            }
+                }
 
-            return true;
-        } else
+                return true;
+            } else
+                return false;
+        } else {
             return false;
+        }
     }
 
     query(code) {
-        /*let index = this._searchIndexByCode(code);
-        if (index != -1)
-            return this._structure[index];
-        else
-            return -1;*/
+        let aux = this._start;
+        let objectFound = -1;
+        while (aux != null && objectFound === -1) {
+            if (aux.code === code)
+                objectFound = aux;
+            aux = aux.next;
+        }
+
+        return objectFound;
     }
 
     delete(code) {
-        /*let position = this._searchIndexByCode(code);
+        let position = this._searchIndexByCode(code);
         if (position != -1) {
             for (let i = position; i < this._top; i++) {
                 this._structure[i] = this._structure[i + 1];
@@ -55,7 +60,11 @@ export default class SimpleList {
             this._sortArray(this._structure);
             return true;
         } else
-            return false;*/
+            return false;
+    }
+
+    reverseReport() {
+
     }
 
     _isAValidPosition(position) {
@@ -87,9 +96,5 @@ export default class SimpleList {
             aux = aux.next;
         }
         this._report = string;
-    }
-
-    reverseReport() {
-
     }
 }
