@@ -1,12 +1,6 @@
 export default class SimpleList {
     constructor() {
         this._start = null;
-        this._report = '';
-    }
-
-    get report() {
-        this._updateReport();
-        return this._report;
     }
 
     add(node, position) {
@@ -50,21 +44,46 @@ export default class SimpleList {
     }
 
     delete(code) {
-        let position = this._searchIndexByCode(code);
-        if (position != -1) {
-            for (let i = position; i < this._top; i++) {
-                this._structure[i] = this._structure[i + 1];
+        let isDeleted = false;
+        if (this.query(code) != -1) {
+            if (this._start.code != code) {
+                let aux = this._start;
+                while (aux.next != null && isDeleted === false) {
+                    if (aux.next.code === code) {
+                        aux.next = aux.next.next;
+                        isDeleted = true;
+                    } else
+                        aux = aux.next;
+                }
+            } else {
+                if (this._start.next != null)
+                    this._start = this._start.next
+                else
+                    this._start = null;
+                return true;
             }
-            this._structure[this._top] = undefined;
-            this._top--;
-            this._sortArray(this._structure);
-            return true;
-        } else
-            return false;
+        }
+        return isDeleted;
+    }
+
+    report() {
+        let aux = this._start;
+        let string = '';
+        while (aux != null) {
+            string = string + '<br>' + aux.toString();
+            aux = aux.next;
+        }
+        return string;
     }
 
     reverseReport() {
-
+        let aux = this._start;
+        let string = '';
+        while (aux != null) {
+            string = aux.toString() + '<br>' + string;
+            aux = aux.next;
+        }
+        return '<br>' + string;
     }
 
     _isAValidPosition(position) {
@@ -86,15 +105,5 @@ export default class SimpleList {
         }
 
         return totalNodes;
-    }
-
-    _updateReport() {
-        let aux = this._start;
-        let string = '';
-        while (aux != null) {
-            string = string + '<br>' + aux.toString();
-            aux = aux.next;
-        }
-        this._report = string;
     }
 }

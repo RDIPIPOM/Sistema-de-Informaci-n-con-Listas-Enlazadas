@@ -40,9 +40,9 @@ document.querySelector('#btnDelete').addEventListener('click', () => {
 });
 //Button create report
 document.querySelector('#btnCreateReport').addEventListener('click', () => {
-    tagArticle.innerHTML = inventory.report;
+    tagArticle.innerHTML = inventory.report();
 });
 //Button create reverse report
 document.querySelector('#btnCreateReverseReport').addEventListener('click', () => {
-    tagArticle.innerHTML = inventory.report;
+    tagArticle.innerHTML = inventory.reverseReport();
 });
