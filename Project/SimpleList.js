@@ -1,3 +1,8 @@
+//////Observaciones/////
+/*
+1. Las variables deberían guardar solo un tipo de dato ya que si lo intentas migrar a otro lenguege es probable que truene
+2. Es posible usar recursividad en varias funciones, sin embargo, es menos eficiente que el método actual
+*/
 export default class SimpleList {
     constructor() {
         this._start = null;
